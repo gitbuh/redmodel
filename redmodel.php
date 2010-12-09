@@ -47,26 +47,28 @@ class RedModel extends RedModel_SimpleModel {
   }
   
   /**
-      Create something
+      Create
   */
-  public function createBean ($fields) {
-    $bean=R::dispense($this->metamodel->name);
-    $bean->import($fields, $this->getFieldList());
+  public static function createBean ($fields) {
+    $c = get_called_class();
+    $o = new $c();
+    $bean = R::dispense($o->metamodel->name);
+    $bean->import($fields, $o->getFieldList());
     R::store($bean);
-    $this->bean = $bean;
     return $bean;
   }
   
   /**
-      Update something
+      Update
   */
-  public function updateBean ($fields) {
-    $id   = $fields['id'];
-    $bean = R::load($this->metamodel->name, $id);
+  public static function updateBean ($fields) {
+    $c = get_called_class();
+    $o = new $c();
+    $id = $fields['id'];
+    $bean = R::load($o->metamodel->name, $id);
     if (!$bean->id) return null;
-    $bean->import($fields, $this->getFieldList());
+    $bean->import($fields, $o->getFieldList());
     R::store($bean);
-    $this->bean = $bean;
     return $bean;
   }
 
