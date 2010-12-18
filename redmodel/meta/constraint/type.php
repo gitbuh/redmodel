@@ -18,7 +18,14 @@ class RedModel_Meta_Constraint_Type extends RedModel_Meta_Constraint {
     
     // if the first character is uppercased, it's a class name
     if ($cval{0} === strtoupper($cval{0})) {
-      $cval = 'int';
+      $prop = strtolower($cval);
+      // print_r($this->field->model->bean->export()); die;
+      $id = $this->field->model->bean->$prop;
+      if (!$id) return $this->dispatch(false, "{$this->field->title} does not exist");
+      $r = R::findOne($prop, "id = $id");
+      if (!$r) return $this->dispatch(false, "{$this->field->title} does not exist");
+      $this->field->model->bean->$prop = $r;
+      return $this->dispatch(true);
     }
     
     switch ($cval) {

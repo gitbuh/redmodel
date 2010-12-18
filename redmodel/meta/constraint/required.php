@@ -13,8 +13,13 @@ class RedModel_Meta_Constraint_Required extends RedModel_Meta_Constraint {
   public function check () {
     $modelName = $this->field->model->name;
     $fieldName = $this->field->name;
-    return $this->dispatch($this->value==false || ($this->field && $this->field->value),
-      "{$this->field->title} is required");
+    $bean = $this->field->model->bean;
+    $ctx = @$this->field->constraints['context'];
+    $update = $ctx ? strpos(",,{$ctx->value},", ',update,') : true;
+    return $this->dispatch(
+      (!$this->value) || ($this->field && $this->field->value) || ($bean->id && !$update),
+      "{$this->field->title} is required"
+    );
   }
 
 }

@@ -32,9 +32,19 @@ class RedModel extends RedModel_SimpleModel {
   /**
       Get list of field names
   */
-  public function getFieldList () {
+  public function getFieldList ($context='create,update,list') {
     $out='';
-    foreach ($this->metamodel->fields as $field) $out .= ($out?',':'') . $field->name;
+    // if ($context=='create') die ('sd');
+    if (!is_array($context)) $context = explode(',', $context);
+    foreach ($this->metamodel->fields as $field) {
+      if ($fc=@$field->constraints['context']->value) {
+        !is_array($fc) && $fc = explode(',', $fc);
+        $ok=false;
+        foreach ($context as $c1) foreach ($fc as $c2) if ($c1 && $c2 && ($c1==$c2)) $ok=true;
+        if (!$ok) continue;
+      }
+      $out .= ($out ? ',' : '') . $field->name;
+    }
     return $out;
   }
   
@@ -53,7 +63,7 @@ class RedModel extends RedModel_SimpleModel {
     $c = get_called_class();
     $o = new $c();
     $bean = R::dispense($o->metamodel->name);
-    $bean->import($fields, $o->getFieldList());
+    $bean->import($fields, $o->getFieldList('create'));
     R::store($bean);
     return $bean;
   }
@@ -62,13 +72,26 @@ class RedModel extends RedModel_SimpleModel {
       Update
   */
   public static function updateBean ($fields) {
+    $fields = (array)$fields;
     $c = get_called_class();
     $o = new $c();
     $id = $fields['id'];
     $bean = R::load($o->metamodel->name, $id);
     if (!$bean->id) return null;
-    $bean->import($fields, $o->getFieldList());
+    $bean->import($fields, $o->getFieldList('update'));
     R::store($bean);
+    return $bean;
+  }
+  
+  /**
+      Create
+  */
+  public static function deleteBean ($fields) {
+    $c = get_called_class();
+    $o = new $c();
+    $bean = R::dispense($o->metamodel->name);
+    $bean->import($fields, 'id');
+    R::trash($bean);
     return $bean;
   }
 
