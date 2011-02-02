@@ -2,7 +2,7 @@
 /**
     Abstact class representing part of a metamodel
 */
-class RedModel_Meta {
+class RedModel_Meta extends ArrayObject {
 
   public $name;
   

@@ -9,8 +9,8 @@ class RedModel extends RedModel_SimpleModel {
   public $metamodel;
   
   public function __construct () {
-    $this->name = $this->metamodel['name'];
-    $this->metamodel = RedModel_Meta_Model::fromArray($this->metamodel['fields']);
+    $this->name = $this->meta['name'];
+    $this->metamodel = RedModel_Meta_Model::fromArray($this->meta['fields']);
     $this->metamodel->name = $this->name;
     $this->metamodel->realModel = &$this;
     $this->metamodel->bean = &$this->bean;
