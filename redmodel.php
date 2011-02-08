@@ -3,7 +3,12 @@
 set_include_path(get_include_path().PATH_SEPARATOR .dirname(__FILE__)); 
 spl_autoload_register(function($class){return spl_autoload(str_replace('_', '/', $class));});
 
-
+RedModel_Meta_Constraint_Max::register('max');
+RedModel_Meta_Constraint_Min::register('min');
+RedModel_Meta_Constraint_Required::register('required');
+RedModel_Meta_Constraint_Type::register('type');
+RedModel_Meta_Constraint_Unique::register('unique');
+    
 class RedModel extends RedModel_SimpleModel {
   
   public $metamodel;

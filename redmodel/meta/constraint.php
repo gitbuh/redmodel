@@ -51,12 +51,4 @@ class RedModel_Meta_Constraint extends RedModel_Meta  {
     
 }
 
-// ugh, how can we get rid of this?
-
-// RedModel_Meta_Constraint_Hidden::register('hidden');
-RedModel_Meta_Constraint_Max::register('max');
-RedModel_Meta_Constraint_Min::register('min');
-RedModel_Meta_Constraint_Required::register('required');
-RedModel_Meta_Constraint_Type::register('type');
-RedModel_Meta_Constraint_Unique::register('unique');
 

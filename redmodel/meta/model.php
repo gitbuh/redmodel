@@ -56,7 +56,10 @@ class RedModel_Meta_Model extends RedModel_Meta {
   */
   public function check () {
     $result=true;
-    foreach ($this->fields as $f) if (!$f->check()) $result=false;
+    foreach ($this->fields as $f) {
+      if (!$f->check()) $result=false;
+    }
+    
     RedModel_Event::dispatch($result ? 'model_ok' : 'model_fail', $this);
     return $result;
   }
