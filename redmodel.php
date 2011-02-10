@@ -89,7 +89,7 @@ class RedModel extends RedModel_SimpleModel {
   }
   
   /**
-      Create
+      Delete
   */
   public static function deleteBean ($fields) {
     $c = get_called_class();
