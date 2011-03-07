@@ -54,6 +54,8 @@ class RedModel_Meta_Constraint_Type extends RedModel_Meta_Constraint {
       case 'string': case 'text':
         return $this->dispatch($fval === "$fval",
           "{$this->field->title} must be a string");
+      case 'file':
+        return $this->dispatch(true);
       default:
         throw new RedModel_Exception("Unknown type constraint '$cval'.");
     }
