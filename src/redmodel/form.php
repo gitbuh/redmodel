@@ -5,7 +5,10 @@
 class RedModel_Form {
 
   public static function getFields ($model) {
-    if (!is_object($model)) $model = new $model;
+    if (!is_object($model)) {
+      $className = "Model_$model";
+      $model = new $className;
+    }
     if (@$model->metamodel) $model = $model->metamodel; 
     return $model->fields;
   } 
