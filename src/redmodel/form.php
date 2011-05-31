@@ -6,7 +6,7 @@ class RedModel_Form {
 
   public static function getFields ($model) {
     if (!is_object($model)) {
-      $className = "Model_$model";
+      $className = "$model";
       $model = new $className;
     }
     if (@$model->metamodel) $model = $model->metamodel; 
