@@ -15,6 +15,7 @@ class RedModel_Meta_Constraint_Type extends RedModel_Meta_Constraint {
     $fval = $this->field->value;  // field value
     $modelName = $this->field->model->name;
     $fieldName = $this->field->name;
+    $required = $this->field->required;
     
     // if the first character is uppercased, it's a class name
     if ($cval{0} === strtoupper($cval{0})) {
@@ -57,9 +58,11 @@ class RedModel_Meta_Constraint_Type extends RedModel_Meta_Constraint {
       case 'file':
         return $this->dispatch(true);
       case 'email':
+        if (!$required and !$fval) return $this->dispatch(true); 
         return $this->dispatch(eregi("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$",
          $fval), "Must be a valid email address."); 
       case 'phone':
+          if (!$required and !$fval) return $this->dispatch(true); 
           return $this->dispatch(
             eregi("^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$", $fval),
             "Must be a valid phone number.");
