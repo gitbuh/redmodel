@@ -59,6 +59,10 @@ class RedModel_Meta_Constraint_Type extends RedModel_Meta_Constraint {
       case 'email':
         return $this->dispatch(eregi("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$",
          $fval), "Must be a valid email address."); 
+      case 'phone':
+          return $this->dispatch(
+            eregi("^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$", $fval),
+            "Must be a valid phone number.");
       default:
         throw new RedModel_Exception("Unknown type constraint '$cval'.");
     }
