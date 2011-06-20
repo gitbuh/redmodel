@@ -66,6 +66,10 @@ class RedModel_Meta_Constraint_Type extends RedModel_Meta_Constraint {
           return $this->dispatch(
             eregi("^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$", $fval),
             "Must be a valid phone number.");
+      case 'color':
+          if (!$required && !$fval) return $this->dispatch(true); 
+          $color = str_replace("#", "", $fval);
+          return $this->dispatch(strlen($color) == 6, "{$this->field->title} must be a valid hex-color.");          
       default:
         throw new RedModel_Exception("Unknown type constraint '$cval'.");
     }
