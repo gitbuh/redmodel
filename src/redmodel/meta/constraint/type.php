@@ -41,7 +41,7 @@ class RedModel_Meta_Constraint_Type extends RedModel_Meta_Constraint {
         $ok = $d['year'] && $d['month'];
 
         if ($ok) { 
-          $date = date_create("{$d['year']}-{$d['month']}-{$d['day']}");
+          $date = date_create("{$d['year']}-{$d['month']}-{$d['day']} {$d['hour']}:{$d['minute']}:{$d['second']}");
           $date = date_format($date, 'Y-m-d H:i:s');
         }
         $this->field->model->bean->$fieldName = $date;
