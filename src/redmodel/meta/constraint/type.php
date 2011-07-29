@@ -37,6 +37,7 @@ class RedModel_Meta_Constraint_Type extends RedModel_Meta_Constraint {
         return $this->dispatch(is_numeric($fval) && ($fval == round($fval)),
           "{$this->field->title} must be a whole number");
       case 'date':
+        if (!$required && !$fval) return $this->dispatch(true); 
         $d=date_parse($fval);
         $ok = $d['year'] && $d['month'];
 
