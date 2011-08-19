@@ -26,6 +26,10 @@ class RedModel extends RedModel_SimpleModel {
     
   }
   
+  public function getModel () {
+    return $this;
+  }
+  
   /**
       called by RedBean before writing data to the database
   */

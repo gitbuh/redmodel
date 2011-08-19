@@ -39,9 +39,12 @@ class RedModel_Meta_Constraint_Type extends RedModel_Meta_Constraint {
       case 'date':
         if (!$required && !$fval) return $this->dispatch(true); 
         $d=date_parse($fval);
-        $ok = $d['year'] && $d['month'];
+        $ok = $d['year'] && $d['month'] && $d['day'];
 
         if ($ok) { 
+          $d['hour'] = +$d['hour'];
+          $d['minute'] = +$d['minute'];
+          $d['second'] = +$d['second'];
           $date = date_create("{$d['year']}-{$d['month']}-{$d['day']} {$d['hour']}:{$d['minute']}:{$d['second']}");
           $date = date_format($date, 'Y-m-d H:i:s');
         }
@@ -57,6 +60,7 @@ class RedModel_Meta_Constraint_Type extends RedModel_Meta_Constraint {
         return $this->dispatch($fval === "$fval",
           "{$this->field->title} must be a string");
       case 'file':
+      case 'image':
         return $this->dispatch(true);
       case 'email':
         if (!$required && !$fval) return $this->dispatch(true); 
